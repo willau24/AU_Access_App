@@ -28,37 +28,56 @@ struct ContentView: View {
                     ScrollView{
                         Rectangle().foregroundColor(Color.red)
                             .frame(width:150,height:150).cornerRadius(15)
-                            .position(x:100,y:100)
+                            
                             .overlay(
-                                NavigationLink("Test",destination:Text("www.auportal.com")))
-                                
-                        Text("AU Portal")
-                            .position(x:100,y:-60)
-                            .font(.system(size:20))
-                            .onTapGesture {
-                                isAUPortalTapped.toggle()
-                            }
+//                                    Text("AU Portal")
+                                    NavigationLink("AU Portal",destination:Text("www.auportal.com"))
+                                )
+                            .position(x:100,y:100)
+//                                NavigationLink("Test",destination:Text("www.auportal.com")))
+//
+                        Rectangle().foregroundColor(Color.yellow)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .overlay(
+                                NavigationLink("Eagle Service",destination:Text("eagle.american.edu"))
+                            )
+                            .position(x:100,y:110)
+                        Rectangle().foregroundColor(Color.brown)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .overlay(
+                                NavigationLink("ISSS",destination:Text("ieagle.american.edu"))
+                            )
+                            .position(x:100,y:120)
+                        
+                            
+                        Rectangle().foregroundColor(Color.green)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .overlay(
+                                NavigationLink("Canvas Student",destination:Text("canvas.american.edu"))
+                            
+                            )
+                            .position(x:300,y:-375)
                         
                             
                         
-                        Rectangle().foregroundColor(Color.yellow)
+                        Rectangle()
+                            .foregroundColor(Color.purple)
                             .frame(width:150,height:150).cornerRadius(15)
-                            .position(x:100,y:100)
-                        Rectangle().foregroundColor(Color.brown)
-                            .frame(width:150,height:150).cornerRadius(15)
-                            .position(x:100,y:100)
-                        Rectangle().foregroundColor(Color.green)
-                            .frame(width:150,height:150).cornerRadius(15)
-                            .position(x:300,y:-375)
-                        Rectangle().foregroundColor(Color.purple)
-                            .frame(width:150,height:150).cornerRadius(15)
-                            .position(x:300,y:-375)
+                            .overlay(
+                                NavigationLink("Health Portal",destination:Text("eagle.american.edu"))
+                            )
+                            
+                            .position(x:300,y:-365)
                         Rectangle().foregroundColor(Color.orange)
                             .frame(width:150,height:150).cornerRadius(15)
-                            .position(x:300,y:-375)
+                            .overlay(
+                                NavigationLink("HR & Payroll",destination:Text("eagle.american.edu"))
+                            )
+                            .position(x:300,y:-355)
+                        
+                         
+                        
                     }
-                    
-                    
                     .navigationTitle("Dashboard")
                 }
             }
