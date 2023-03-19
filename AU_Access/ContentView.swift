@@ -23,6 +23,8 @@ struct ContentView: View {
 //                    .position(x:210,y:-250)
                 Text("Today is:**\(Date().formatted(.dateTime))**")
 //                    .position(x:220,y:-370)
+                Button("Logout",action:vm.logout)
+                    .buttonStyle(.bordered)
                 
                 NavigationView{
                     ScrollView{
