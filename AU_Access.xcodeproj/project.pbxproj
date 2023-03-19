@@ -13,6 +13,7 @@
 		9BA002BD29AD736A00655C42 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA002BC29AD736A00655C42 /* ContentView.swift */; };
 		9BA002BF29AD736B00655C42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BA002BE29AD736B00655C42 /* Assets.xcassets */; };
 		9BA002C329AD736C00655C42 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BA002C229AD736C00655C42 /* Preview Assets.xcassets */; };
+		B95BCDF129C6C1C00028B3B2 /* Content-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BCDF029C6C1C00028B3B2 /* Content-ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		9BA002BE29AD736B00655C42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9BA002C029AD736C00655C42 /* AU_Access.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AU_Access.entitlements; sourceTree = "<group>"; };
 		9BA002C229AD736C00655C42 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B95BCDF029C6C1C00028B3B2 /* Content-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Content-ViewModel.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				9BA002C029AD736C00655C42 /* AU_Access.entitlements */,
 				9BA002B929AD736900655C42 /* AU_Access.xcdatamodeld */,
 				9BA002C129AD736C00655C42 /* Preview Content */,
+				B95BCDF029C6C1C00028B3B2 /* Content-ViewModel.swift */,
 			);
 			path = AU_Access;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BA002B629AD736900655C42 /* AU_AccessApp.swift in Sources */,
+				B95BCDF129C6C1C00028B3B2 /* Content-ViewModel.swift in Sources */,
 				9BA002BB29AD736A00655C42 /* AU_Access.xcdatamodeld in Sources */,
 				9BA002BD29AD736A00655C42 /* ContentView.swift in Sources */,
 				9BA002B829AD736900655C42 /* Persistence.swift in Sources */,
@@ -273,7 +277,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AU_Access/Preview Content\"";
-				DEVELOPMENT_TEAM = SF9983HR4A;
+				DEVELOPMENT_TEAM = L5YSSM4K44;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -311,7 +315,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AU_Access/Preview Content\"";
-				DEVELOPMENT_TEAM = SF9983HR4A;
+				DEVELOPMENT_TEAM = L5YSSM4K44;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

@@ -6,87 +6,146 @@
 //
 
 import SwiftUI
-import CoreData
-
-//Commit changes
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
+    @StateObject var vm = ViewModel()
+    @State var isAUPortalTapped = false
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+        if vm.authenticated {
+            VStack(spacing: 20){
+                Rectangle()
+                    .frame(width :500, height:40)
+//                    .position(x:215,y:10)
+                    .foregroundColor(Color.blue)
+                Image("ICON")
+//                    .position(x:220,y:-160)
+                Text("Welcome **\(vm.username.lowercased())**!")
+//                    .position(x:210,y:-250)
+                Text("Today is:**\(Date().formatted(.dateTime))**")
+//                    .position(x:220,y:-370)
+                
+                NavigationView{
+                    ScrollView{
+                        Rectangle().foregroundColor(Color.red)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .position(x:100,y:100)
+                            .overlay(
+                                NavigationLink("Test",destination:Text("www.auportal.com")))
+                                
+                        Text("AU Portal")
+                            .position(x:100,y:-60)
+                            .font(.system(size:20))
+                            .onTapGesture {
+                                isAUPortalTapped.toggle()
+                            }
+                        
+                            
+                        
+                        Rectangle().foregroundColor(Color.yellow)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .position(x:100,y:100)
+                        Rectangle().foregroundColor(Color.brown)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .position(x:100,y:100)
+                        Rectangle().foregroundColor(Color.green)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .position(x:300,y:-375)
+                        Rectangle().foregroundColor(Color.purple)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .position(x:300,y:-375)
+                        Rectangle().foregroundColor(Color.orange)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .position(x:300,y:-375)
                     }
+                    
+                    
+                    .navigationTitle("Dashboard")
                 }
-                .onDelete(perform: deleteItems)
             }
-            .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+            
+        } else{
+            ZStack {
+                Rectangle()
+                    .frame(width :500, height:60)
+                    .position(x:215,y:20)
+                    .foregroundColor(Color.blue)
+                Image("ICON")
+                    .position(x:220,y:30)
+                Image("ppp")
+//                    .resizable()
+//                    .cornerRadius(0)
+                    .position(x:226, y:146)
+                
+                Rectangle()
+                    .frame(width:500,height:40)
+                    .position(x:200,y:350)
+                    .foregroundColor(Color.blue)
+                Image("ICON")
+                    .position(x:126,y:350)
+                Text("SIGN IN")
+                    .position(x:226,y:350)
+                
+                
+                
+                VStack(alignment: .leading,spacing: 20){
+                    Spacer()
+                    
+                    Text("Sign in to your Account")
+                        .foregroundColor(.black)
+                        .font(.system(size:30,weight:.medium,design:.rounded))
+                        .position(x:226,y:370)
+                    TextField("Username",text:$vm.username)
+                        .textFieldStyle(.roundedBorder)
+                        .textInputAutocapitalization(.never)
+                        .position(x:226,y:225)
+                    SecureField("Password",text:$vm.password)
+                        .textFieldStyle(.roundedBorder)
+                        .textInputAutocapitalization(.never)
+                        .position(x:226,y:75)
+                        .privacySensitive()
+                    
+                    HStack{
+                        Spacer()
+                        Button("Sign in",action:vm.authenticate)
+                            .buttonStyle(.bordered)
+                            .position(x:296,y:-76)
+                            .foregroundColor(Color.blue)
+                        Rectangle()
+                            .frame(width:120,height:30)
+                            .position(x:-40,y:-74)
+                            .foregroundColor(Color.blue)
+                        Text("AnotherUser")
+                            .position(x:-155,y:-71)
+//                        Spacer()
+                        Button("Reset an expired or forgotten password",action:vm.logPressed)
+                            .position(x:-206,y:5)
+                            .tint(.red.opacity(0.8))
+                        Spacer()
+                            
+                        
                     }
+                    Spacer()
+                    
                 }
+                .alert("Access denied", isPresented:$vm.invalid){
+                    Button("Dismiss",action:vm.logPressed)
+                }
+//                .frame(width:300)
+//                .padding()
+                    
             }
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            .transition(.offset(x:0,y:850))
         }
     }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
+
+
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView()
     }
 }
