@@ -6,6 +6,22 @@
 //
 
 import SwiftUI
+import WebKit
+
+struct WebView: UIViewRepresentable {
+    let url: URL
+    
+    func makeUIView(context: Context) -> WKWebView {
+        let webView = WKWebView()
+        webView.load(URLRequest(url: url))
+        return webView
+    }
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        //Update View
+    }
+}
+
 
 struct ContentView: View {
     @StateObject var vm = ViewModel()
@@ -32,22 +48,19 @@ struct ContentView: View {
                             .frame(width:150,height:150).cornerRadius(15)
                             
                             .overlay(
-//                                    Text("AU Portal")
-                                    NavigationLink("AU Portal",destination:Text("www.auportal.com"))
+                                    NavigationLink("AU Portal", destination: WebView(url: URL(string: "https://myau.american.edu")!))
                                 )
                             .position(x:100,y:100)
-//                                NavigationLink("Test",destination:Text("www.auportal.com")))
-//
                         Rectangle().foregroundColor(Color.yellow)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
-                                NavigationLink("Eagle Service",destination:Text("eagle.american.edu"))
+                                NavigationLink("Eagle Service", destination: WebView(url: URL(string: "https://eagleservice.american.edu")!))
                             )
                             .position(x:100,y:110)
                         Rectangle().foregroundColor(Color.brown)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
-                                NavigationLink("ISSS",destination:Text("ieagle.american.edu"))
+                                NavigationLink("International Student Services", destination: WebView(url: URL(string: "https://www.american.edu/ocl/isss")!))
                             )
                             .position(x:100,y:120)
                         
@@ -55,7 +68,7 @@ struct ContentView: View {
                         Rectangle().foregroundColor(Color.green)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
-                                NavigationLink("Canvas Student",destination:Text("canvas.american.edu"))
+                                NavigationLink("Canvas", destination: WebView(url: URL(string: "https://american.instructure.com")!))
                             
                             )
                             .position(x:300,y:-375)
@@ -66,18 +79,16 @@ struct ContentView: View {
                             .foregroundColor(Color.purple)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
-                                NavigationLink("Health Portal",destination:Text("eagle.american.edu"))
+                                NavigationLink("Health Portal", destination: WebView(url: URL(string: "https://american.studenthealthportal.com")!))
                             )
                             
                             .position(x:300,y:-365)
                         Rectangle().foregroundColor(Color.orange)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
-                                NavigationLink("HR & Payroll",destination:Text("eagle.american.edu"))
+                                NavigationLink("Library", destination: WebView(url: URL(string: "https://www.american.edu/library")!))
                             )
                             .position(x:300,y:-355)
-                        
-                         
                         
                     }
                     .navigationTitle("Dashboard")
