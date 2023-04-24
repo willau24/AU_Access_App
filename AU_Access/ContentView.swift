@@ -56,13 +56,29 @@ struct ContentView: View {
                             .overlay(
                                 NavigationLink("Eagle Service", destination: WebView(url: URL(string: "https://eagleservice.american.edu")!))
                             )
-                            .position(x:100,y:110)
+                            .position(x:100,y:100)
                         Rectangle().foregroundColor(Color.brown)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
                                 NavigationLink("International Student Services", destination: WebView(url: URL(string: "https://www.american.edu/ocl/isss")!))
                             )
-                            .position(x:100,y:120)
+                            .position(x:100,y:100)
+                        
+                        Rectangle().foregroundColor(Color.brown)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .overlay(
+                                NavigationLink("AU Security", destination: WebView(url: URL(string: "https://www.american.edu/finance/memos/au-campus-safety-and-security-resources-notification-2022.cfm")!))
+                            )
+                            .position(x:100,y:100)
+                        
+                        Rectangle().foregroundColor(Color.brown)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .overlay(
+                                NavigationLink("Dining", destination: WebView(url: URL(string:"https://www.american.edu/ocl/onecarddining/")!))
+                            )
+                            .position(x:100,y:100)
+                        
+                        
                         
                             
                         Rectangle().foregroundColor(Color.green)
@@ -71,7 +87,7 @@ struct ContentView: View {
                                 NavigationLink("Canvas", destination: WebView(url: URL(string: "https://american.instructure.com")!))
                             
                             )
-                            .position(x:300,y:-375)
+                            .position(x:300,y:-690)
                         
                             
                         
@@ -79,17 +95,30 @@ struct ContentView: View {
                             .foregroundColor(Color.purple)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
-                                NavigationLink("Health Portal", destination: WebView(url: URL(string: "https://american.studenthealthportal.com")!))
+                                NavigationLink(" Student Health Portal", destination: WebView(url: URL(string: "https://american.studenthealthportal.com")!))
                             )
                             
-                            .position(x:300,y:-365)
+                            .position(x:300,y:-690)
                         Rectangle().foregroundColor(Color.orange)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
                                 NavigationLink("Library", destination: WebView(url: URL(string: "https://www.american.edu/library")!))
                             )
-                            .position(x:300,y:-355)
+                            .position(x:300,y:-690)
                         
+                        Rectangle().foregroundColor(Color.orange)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .overlay(
+                                NavigationLink("AU Calendar", destination: WebView(url: URL(string: "https://www.american.edu/provost/registrar/academic-calendar.cfm")!))
+                            )
+                            .position(x:300,y:-690)
+                        
+                        Rectangle().foregroundColor(Color.orange)
+                            .frame(width:150,height:150).cornerRadius(15)
+                            .overlay(
+                                NavigationLink("Social Clubs ", destination: WebView(url: URL(string: "https://www.american.edu/ocl/student-involvement/student-clubs.cfm")!))
+                            )
+                            .position(x:300,y:-690)
                     }
                     .navigationTitle("Dashboard")
                 }
