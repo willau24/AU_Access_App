@@ -27,6 +27,10 @@ struct ContentView: View {
     
     @StateObject var vm = ViewModel()
     @State var isAUPortalTapped = false
+    @State private var rectangleOffset = CGSize.zero
+    @GestureState private var dragOffset = CGSize.zero
+    @State private var rectangleOffset1 = CGSize.zero
+    @GestureState private var dragOffset2 = CGSize.zero
     var body: some View {
         if vm.authenticated {
             VStack(spacing: 20){
@@ -47,6 +51,7 @@ struct ContentView: View {
                 
                 NavigationView{
                     ScrollView{
+                        
                         Rectangle().foregroundColor(Color.red)
                             .frame(width:150,height:150).cornerRadius(15)
                             
@@ -54,6 +59,20 @@ struct ContentView: View {
                                     NavigationLink("AU Portal", destination: WebView(url: URL(string: "https://myau.american.edu")!))
                                 )
                             .position(x:100,y:100)
+                            .offset(rectangleOffset)
+                                .gesture(
+                                    DragGesture()
+                                        .onChanged { value in
+                                            // Update the offset of the Rectangle based on the drag gesture
+                                            rectangleOffset = CGSize(width: value.translation.width, height: value.translation.height)
+                                        }
+                                        .onEnded { value in
+                                                        // Calculate the new position based on the offset and the drag gesture's translation
+                                                      
+                                                        rectangleOffset = .zero
+                                                    }
+                                )
+                            
                         Rectangle().foregroundColor(Color.yellow)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
@@ -66,6 +85,8 @@ struct ContentView: View {
                                 NavigationLink("International Student Services", destination: WebView(url: URL(string: "https://www.american.edu/ocl/isss")!))
                             )
                             .position(x:100,y:100)
+                            
+                        
                         
                         Rectangle().foregroundColor(Color.brown)
                             .frame(width:150,height:150).cornerRadius(15)
@@ -73,13 +94,14 @@ struct ContentView: View {
                                 NavigationLink("AU Security", destination: WebView(url: URL(string: "https://www.american.edu/finance/memos/au-campus-safety-and-security-resources-notification-2022.cfm")!))
                             )
                             .position(x:100,y:100)
-                        
+                            
                         Rectangle().foregroundColor(Color.brown)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
                                 NavigationLink("Dining", destination: WebView(url: URL(string:"https://www.american.edu/ocl/onecarddining/")!))
                             )
                             .position(x:100,y:100)
+                            
                         
                         
                         
@@ -91,7 +113,7 @@ struct ContentView: View {
                             
                             )
                             .position(x:300,y:-690)
-                        
+                            
                             
                         
                         Rectangle()
@@ -102,19 +124,24 @@ struct ContentView: View {
                             )
                             
                             .position(x:300,y:-690)
+                          
+                            
                         Rectangle().foregroundColor(Color.orange)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
                                 NavigationLink("Library", destination: WebView(url: URL(string: "https://www.american.edu/library")!))
                             )
                             .position(x:300,y:-690)
-                        
+                           
+                            
                         Rectangle().foregroundColor(Color.orange)
                             .frame(width:150,height:150).cornerRadius(15)
                             .overlay(
                                 NavigationLink("AU Calendar", destination: WebView(url: URL(string: "https://www.american.edu/provost/registrar/academic-calendar.cfm")!))
                             )
                             .position(x:300,y:-690)
+                           
+                            
                         
                         Rectangle().foregroundColor(Color.orange)
                             .frame(width:150,height:150).cornerRadius(15)
@@ -122,6 +149,8 @@ struct ContentView: View {
                                 NavigationLink("Social Clubs ", destination: WebView(url: URL(string: "https://www.american.edu/ocl/student-involvement/student-clubs.cfm")!))
                             )
                             .position(x:300,y:-690)
+                            
+                            
                     }
                     .navigationTitle("Dashboard")
                 }
