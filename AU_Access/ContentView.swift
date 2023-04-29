@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WebKit
+import EventKit
 
 struct WebView: UIViewRepresentable {
     let url: URL
@@ -22,23 +23,25 @@ struct WebView: UIViewRepresentable {
     }
 }
 
-
 struct ContentView: View {
+    
     @StateObject var vm = ViewModel()
     @State var isAUPortalTapped = false
     var body: some View {
         if vm.authenticated {
             VStack(spacing: 20){
+
                 Rectangle()
                     .frame(width :500, height:40)
-//                    .position(x:215,y:10)
+//
                     .foregroundColor(Color.blue)
                 Image("ICON")
 //                    .position(x:220,y:-160)
                 Text("Welcome **\(vm.username.lowercased())**!")
 //                    .position(x:210,y:-250)
-                Text("Today is:**\(Date().formatted(.dateTime))**")
-//                    .position(x:220,y:-370)
+                Button("Sync with AU Calendar") {
+                    addEventsToCalendar()
+                }
                 Button("Logout",action:vm.logout)
                     .buttonStyle(.bordered)
                 
@@ -169,12 +172,77 @@ struct ContentView: View {
             .transition(.offset(x:0,y:850))
         }
     }
+    
+    func createDate(day: Int, month: Int, year: Int, hour: Int = 0, minute: Int = 0) -> Date? {
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        dateComponents.second = 0
+
+        return calendar.date(from: dateComponents)
+    }
+    
+    func createCalenderEvents(eventStore: EKEventStore) -> [EKEvent] {
+        var events: [EKEvent] = []
+        
+        let eventDetails: [(title: String, startDate: (day: Int, month: Int, year: Int), endDate: (day: Int, month: Int, year: Int))] = [
+                ("Spring classes end", (1, 5, 2023), (1, 5, 2023)),
+                ("Theses and dissertations due in Registrar's Office for spring degree candidates", (1, 5, 2023), (1, 5, 2023)),
+                ("Payment due for summer classes", (1, 5, 2023), (1, 5, 2023)),
+                ("Spring study day; no classes", (2, 5, 2023), (3, 5, 2023)),
+                ("Spring final examinations", (4, 5, 2023), (10, 5, 2023)),
+                ("Commencement Weekend Activities", (11, 5, 2023), (14, 5, 2023)),
+                ("All full-term spring classes final grades due", (12, 5, 2023), (12, 5, 2023)),
+                ("Official Degree Award Date", (14, 5, 2023), (14, 5, 2023))
+        ]
+
+            for eventDetail in eventDetails {
+                let startDate = createDate(day: eventDetail.startDate.day, month: eventDetail.startDate.month, year: eventDetail.startDate.year)
+                let endDate = createDate(day: eventDetail.endDate.day, month: eventDetail.endDate.month, year: eventDetail.endDate.year)
+                
+                if let startDate = startDate, let endDate = endDate {
+                    let event = EKEvent(eventStore: eventStore)
+                    event.title = eventDetail.title
+                    event.startDate = startDate
+                    event.endDate = endDate
+                    events.append(event)
+                }
+            }
+        return events
+    }
+
+    private func addEventsToCalendar() {
+        
+        let eventStore = EKEventStore()
+        let calendarEvents = createCalenderEvents(eventStore: eventStore)
+        
+        eventStore.requestAccess(to: .event) { granted, error in
+            if granted {
+                for event in calendarEvents {
+                    let newEvent = EKEvent(eventStore: eventStore)
+                    newEvent.title = event.title
+                    newEvent.startDate = event.startDate
+                    newEvent.endDate = event.endDate
+                    
+                    let calendar = eventStore.defaultCalendarForNewEvents
+                    newEvent.calendar = calendar
+                    do {
+                        try eventStore.save(newEvent, span: .thisEvent)
+                        print("Event added to calendar")
+                    } catch {
+                        print("Error saving event: \(error)")
+                    }
+                }
+            } else {
+                print("Access denied to calendar")
+            }
+        }
+    }
 }
-
-
-
-
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

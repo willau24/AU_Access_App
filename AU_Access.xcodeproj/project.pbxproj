@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B6A15E129FD8B480097945D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA002BC29AD736A00655C42 /* ContentView.swift */; };
 		9BA002B629AD736900655C42 /* AU_AccessApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA002B529AD736900655C42 /* AU_AccessApp.swift */; };
 		9BA002B829AD736900655C42 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA002B729AD736900655C42 /* Persistence.swift */; };
 		9BA002BB29AD736A00655C42 /* AU_Access.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BA002B929AD736900655C42 /* AU_Access.xcdatamodeld */; };
-		9BA002BD29AD736A00655C42 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA002BC29AD736A00655C42 /* ContentView.swift */; };
 		9BA002BF29AD736B00655C42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BA002BE29AD736B00655C42 /* Assets.xcassets */; };
 		9BA002C329AD736C00655C42 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BA002C229AD736C00655C42 /* Preview Assets.xcassets */; };
 		B95BCDF129C6C1C00028B3B2 /* Content-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95BCDF029C6C1C00028B3B2 /* Content-ViewModel.swift */; };
@@ -149,9 +149,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BA002B629AD736900655C42 /* AU_AccessApp.swift in Sources */,
+				9B6A15E129FD8B480097945D /* ContentView.swift in Sources */,
 				B95BCDF129C6C1C00028B3B2 /* Content-ViewModel.swift in Sources */,
 				9BA002BB29AD736A00655C42 /* AU_Access.xcdatamodeld in Sources */,
-				9BA002BD29AD736A00655C42 /* ContentView.swift in Sources */,
 				9BA002B829AD736900655C42 /* Persistence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,6 +209,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -261,6 +262,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -281,6 +283,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "This app syncs your calendar with AU's calendar";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -319,6 +322,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "This app syncs your calendar with AU's calendar";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
