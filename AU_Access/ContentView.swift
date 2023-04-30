@@ -54,7 +54,9 @@ struct ContentView: View {
         LinkItem(imageName: "Dining", destinationURL: "https://www.american.edu/ocl/onecarddining/", text: "Dining"),
         LinkItem(imageName: "Library", destinationURL: "https://www.american.edu/library", text: "Library"),
         LinkItem(imageName: "Calendar", destinationURL: "https://www.american.edu/provost/registrar/academic-calendar.cfm", text: "AU Calendar"),
-        LinkItem(imageName: "SHP", destinationURL: "https://american.studenthealthportal.com", text: "Health Portal")
+        LinkItem(imageName: "Social", destinationURL: "https://www.american.edu/ocl/student-involvement/student-clubs.cfm", text: "Social Clubs"),
+        LinkItem(imageName: "SHP", destinationURL: "https://american.studenthealthportal.com", text: "Health Portal"),
+        LinkItem(imageName: "HR", destinationURL: "https://american.studenthealthportal.com", text: "HR & Payroll")
     ]
     
     @State private var deletedLinks: [LinkItem] = []
