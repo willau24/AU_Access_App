@@ -23,6 +23,11 @@ struct WebView: UIViewRepresentable {
     }
 }
 
+struct IdentifiableURL: Identifiable {
+    let id = UUID()
+    let url: URL
+}
+
 struct ContentView: View {
     
     @StateObject var vm = ViewModel()
@@ -31,230 +36,193 @@ struct ContentView: View {
     @GestureState private var dragOffset = CGSize.zero
     @State private var rectangleOffset1 = CGSize.zero
     @GestureState private var dragOffset2 = CGSize.zero
+    
+    struct LinkItem: Identifiable {
+        let id: UUID = UUID()
+        let imageName: String
+        let destinationURL: String
+        let text: String
+        var isDeleted: Bool = false
+    }
+    
+    @State private var links: [LinkItem] = [
+        LinkItem(imageName: "AU Portal", destinationURL: "https://myau.american.edu", text: "AU Portal"),
+        LinkItem(imageName: "Eagle Service", destinationURL: "https://eagleservice.american.edu", text: "Eagle Service"),
+        LinkItem(imageName: "ISSS", destinationURL: "https://www.american.edu/ocl/isss", text: "ISSS"),
+        LinkItem(imageName: "Canvas", destinationURL: "https://american.instructure.com", text: "Canvas"),
+        LinkItem(imageName: "AU Security", destinationURL: "https://www.american.edu/finance/memos/au-campus-safety-and-security-resources-notification-2022.cfm", text: "Au Security"),
+        LinkItem(imageName: "Dining", destinationURL: "https://www.american.edu/ocl/onecarddining/", text: "Dining"),
+        LinkItem(imageName: "Library", destinationURL: "https://www.american.edu/library", text: "Library"),
+        LinkItem(imageName: "Calendar", destinationURL: "https://www.american.edu/provost/registrar/academic-calendar.cfm", text: "AU Calendar"),
+        LinkItem(imageName: "SHP", destinationURL: "https://american.studenthealthportal.com", text: "Health Portal")
+    ]
+    
+    @State private var deletedLinks: [LinkItem] = []
+    @State private var activeURL: IdentifiableURL? = nil
+    @State private var isCalendarSyncEnabled = false
+    @State private var selectedItem: LinkItem? = nil
+    
     var body: some View {
         if vm.authenticated {
-            VStack(spacing: 20){
-
-                Rectangle()
-                    .frame(width :500, height:40)
-//
-                    .foregroundColor(Color.blue)
-                Image("ICON")
-//                    .position(x:220,y:-160)
-                Text("Welcome **\(vm.username.lowercased())**!")
-//                    .position(x:210,y:-250)
-                Button("Sync with AU Calendar") {
-                    addEventsToCalendar()
-                }
-                Button("Logout",action:vm.logout)
-                    .buttonStyle(.bordered)
-                
-                NavigationView{
-                    ScrollView{
-                        
-                        Image("AU Portal")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .cornerRadius(15)
-                            .overlay(
-                                NavigationLink(" ", destination: WebView(url: URL(string: "https://myau.american.edu")!))
-                            )
-                        
-                        
-                            .position(x:100,y:100)
-                        
-//                        Text("AU Portal")
-//                            .font(.headline)
-//                            .position(x:100,y:20)
-//
-                        
-                        //                            .offset(rectangleOffset)
-                        //                                .gesture(
-                        //                                    DragGesture()
-                        //                                        .onChanged { value in
-                        //                                            // Update the offset of the Rectangle based on the drag gesture
-                        //                                            rectangleOffset = CGSize(width: value.translation.width, height: value.translation.height)
-                        //                                        }
-                        //                                        .onEnded { value in
-                        //                                                        // Calculate the new position based on the offset and the drag gesture's translation
-                        //
-                        //                                                        rectangleOffset = .zero
-                        //                                                    }
-                        //                                )
-                        
-                        Image("Eagle Service")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .cornerRadius(15)
-                            .overlay(
-                                NavigationLink(" ", destination: WebView(url: URL(string: "https://eagleservice.american.edu")!))
-                            )
-                            .position(x:100,y:100)
-                        
-                       
-                        Image("ISSS")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .cornerRadius(15)
-                            .overlay(
-                                NavigationLink(" ", destination: WebView(url: URL(string: "https://www.american.edu/ocl/isss")!))
-                            )
-                            .position(x:100,y:100)
-                        
-                        Image("AU Security")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .cornerRadius(15)
-                            .overlay(
-                                NavigationLink(" ", destination: WebView(url: URL(string: "https://www.american.edu/finance/memos/au-campus-safety-and-security-resources-notification-2022.cfm")!))
-                            )
-                            .position(x:100,y:100)
-                        
-                        Image("Social")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .cornerRadius(15)
-                            .overlay(
-                                NavigationLink(" ", destination: WebView(url: URL(string: "https://www.american.edu/finance/memos/au-campus-safety-and-security-resources-notification-2022.cfm")!))
-                            )
-                            .position(x:100,y:100)
-                        
-                        
-                        
-                        Image("Dining")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .cornerRadius(15)
-                            .overlay(
-                                NavigationLink(" ", destination: WebView(url: URL(string:"https://www.american.edu/ocl/onecarddining/")!))
-                            )
-                            .position(x:300,y:-70)
-              
-                        Image("Canvas")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .cornerRadius(15)
-                            .overlay(
-                                NavigationLink(" ", destination: WebView(url: URL(string: "https://american.instructure.com")!))
-                                
-                            )
-                            .position(x:300,y:-870)
-                        Image("SHP")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .cornerRadius(15)
-                            .overlay(
-                                NavigationLink(" ", destination: WebView(url: URL(string: "https://american.studenthealthportal.com")!))
-                            )
-                        
-                            .position(x:300,y:-860)
-
-                        Image("Library")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .cornerRadius(15)
-                            .overlay(
-                                NavigationLink(" ", destination: WebView(url: URL(string: "https://www.american.edu/library")!))
-                            )
-                            .position(x:300,y:-860)
-      
-                        Image("Calendar")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .cornerRadius(15)
-                            .overlay(
-                                NavigationLink(" ", destination: WebView(url: URL(string: "https://www.american.edu/provost/registrar/academic-calendar.cfm")!))
-                            )
-                            .position(x:300,y:-860)
-    
-                    }
-                    .navigationTitle("Dashboard")
-                }
-            }
             
-    }else{
-            ZStack {
+            VStack(spacing: 0) {
                 Rectangle()
-                    .frame(width :500, height:60)
-                    .position(x:215,y:20)
-                    .foregroundColor(Color.blue)
-                Image("ICON")
-                    .position(x:220,y:30)
-                Image("ppp")
-//                    .resizable()
-//                    .cornerRadius(0)
-                    .position(x:226, y:146)
-                
-                Rectangle()
-                    .frame(width:500,height:40)
-                    .position(x:200,y:350)
-                    .foregroundColor(Color.blue)
-                Image("ICON")
-                    .position(x:126,y:350)
-                Text("SIGN IN")
-                    .position(x:226,y:350)
-                
-                
-                
-                VStack(alignment: .leading,spacing: 20){
-                    Spacer()
-                    
-                    Text("Sign in to your Account")
-                        .foregroundColor(.black)
-                        .font(.system(size:30,weight:.medium,design:.rounded))
-                        .position(x:226,y:370)
-                    TextField("Username",text:$vm.username)
-                        .textFieldStyle(.roundedBorder)
-                        .textInputAutocapitalization(.never)
-                        .position(x:226,y:225)
-                    SecureField("Password",text:$vm.password)
-                        .textFieldStyle(.roundedBorder)
-                        .textInputAutocapitalization(.never)
-                        .position(x:226,y:75)
-                        .privacySensitive()
-                    
-                    HStack{
-                        Spacer()
-                        Button("Sign in",action:vm.authenticate)
-                            .buttonStyle(.bordered)
-                            .position(x:296,y:-76)
-                            .foregroundColor(Color.blue)
-                        Rectangle()
-                            .frame(width:120,height:30)
-                            .position(x:-40,y:-74)
-                            .foregroundColor(Color.blue)
-                        Text("AnotherUser")
-                            .position(x:-155,y:-71)
-//                        Spacer()
-                        Button("Reset an expired or forgotten password",action:vm.logPressed)
-                            .position(x:-206,y:5)
-                            .tint(.red.opacity(0.8))
-                        Spacer()
-                            
-                        
+                    .frame(height: 60)
+                    .foregroundColor(.blue)
+                    .overlay (
+                        HStack {
+                            Text("Welcome \(vm.username)!")
+                                .foregroundColor(.white)
+                            Spacer()
+                            Button("Logout", action: vm.logout)
+                                .buttonStyle(.bordered)
+                                .foregroundColor(.white)
+                        }
+                            .padding(.horizontal)
+                    )
+                Toggle(isOn: $isCalendarSyncEnabled) {
+                    Text("Sync with AU Calender")
+                        .foregroundColor(.blue)
+                }
+                .padding()
+                .padding(.horizontal)
+                .onChange(of: isCalendarSyncEnabled) { newValue in
+                    if newValue {
+                        addEventsToCalendar()
                     }
+                }
+                    
+                ScrollView {
+                    VStack {
+                        ForEach(0..<5) { row in
+                            HStack(spacing: 20) {
+                                ForEach(0..<2) { column in
+                                    let index = row * 2 + column
+                                    if index < links.count {
+                                        let link = links[index]
+                                        
+                                        Button(action: {
+                                            selectedItem = link
+                                            
+                                            if let url = URL(string: link.destinationURL) {
+                                                activeURL = IdentifiableURL(url: url)
+                                            }
+                                        }) {
+                                            VStack {
+                                                Image(link.imageName)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 150, height: 150)
+                                                    .cornerRadius(15)
+                                                    .overlay(
+                                                        Color.clear
+                                                    )
+                                                Text(link.text)
+                                                    .font(.headline)
+                                            }
+                                        }
+                                        .contextMenu {
+                                            Button(action: {
+                                                if let index = links.firstIndex(where: {$0.id == link.id}) {
+                                                    deleteLink(at: index)
+                                                }
+                                            }) {
+                                                Text("Delete")
+                                                Image(systemName: "trash")
+                                            }
+                                        }
+                                        .padding()
+                                    } else {
+                                        Spacer()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .padding()
+                    .sheet(item: $activeURL) { identifiableURL in
+                        WebView(url: identifiableURL.url)
+                    }
+                    Button("Recover Deleted Links", action: recoverDeletedLinks)
+                        .padding()
+                }
+            }
+        } else {
+            ZStack {
+                Image("ppp")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+                    .offset(x: -20, y: 0)
+                
+                VStack {
+                    Rectangle()
+                        .frame(height: 60)
+                        .foregroundColor(.blue)
+                        .overlay (
+                            HStack {
+                                Image("ICON")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                Text("AU Access")
+                                    .foregroundColor(.white)
+                                    .fontWeight(.bold)
+                                    .font(.largeTitle)
+                            }
+                        )
+                    Spacer()
+                    Spacer()
+                    Spacer()
                     Spacer()
                     
-                }
-                .alert("Access denied", isPresented:$vm.invalid){
-                    Button("Dismiss",action:vm.logPressed)
-                }
-//                .frame(width:300)
-//                .padding()
+                    VStack(spacing: 20) {
+                        TextField("Username", text: $vm.username)
+                            .textFieldStyle(.roundedBorder)
+                            .textInputAutocapitalization(.none)
+                        SecureField("Password", text: $vm.password)
+                            .textFieldStyle(.roundedBorder)
+                            .textInputAutocapitalization(.none)
+                            .privacySensitive()
+                        
+                        Button(action: vm.authenticate) {
+                            Text("Sign-in with AU Credentials")
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 40)
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
+                        
+                        Text("Reset an expired or forgotten password")
+                            .foregroundColor(.red)
+                    }
+                    .padding()
+                    .background(Color.white.opacity(0.8))
+                    .cornerRadius(8)
+                    .padding()
                     
+                    Spacer()
+                }
             }
-            .transition(.offset(x:0,y:850))
+            .alert(isPresented: $vm.invalid) {
+                Alert(
+                    title: Text("Access denied"),
+                    message: nil,
+                    dismissButton: .default(Text("Dismiss"), action: vm.logPressed)
+                )
+            }
+            .transition(.offset(x: 0, y: 850))
         }
+    }
+    
+    func deleteLink(at index: Int) {
+        let deletedLink = links.remove(at: index)
+        deletedLinks.append(deletedLink)
+    }
+    
+    func recoverDeletedLinks() {
+        links.append(contentsOf: deletedLinks)
+        deletedLinks.removeAll()
     }
     
     func createDate(day: Int, month: Int, year: Int, hour: Int = 0, minute: Int = 0) -> Date? {
