@@ -52,111 +52,137 @@ struct ContentView: View {
                 NavigationView{
                     ScrollView{
                         
-                        Rectangle().foregroundColor(Color.red)
-                            .frame(width:150,height:150).cornerRadius(15)
-                            
+                        Image("AU Portal")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .cornerRadius(15)
                             .overlay(
-                                    NavigationLink("AU Portal", destination: WebView(url: URL(string: "https://myau.american.edu")!))
-                                )
-                            .position(x:100,y:100)
-                            .offset(rectangleOffset)
-                                .gesture(
-                                    DragGesture()
-                                        .onChanged { value in
-                                            // Update the offset of the Rectangle based on the drag gesture
-                                            rectangleOffset = CGSize(width: value.translation.width, height: value.translation.height)
-                                        }
-                                        .onEnded { value in
-                                                        // Calculate the new position based on the offset and the drag gesture's translation
-                                                      
-                                                        rectangleOffset = .zero
-                                                    }
-                                )
-                            
-                        Rectangle().foregroundColor(Color.yellow)
-                            .frame(width:150,height:150).cornerRadius(15)
-                            .overlay(
-                                NavigationLink("Eagle Service", destination: WebView(url: URL(string: "https://eagleservice.american.edu")!))
+                                NavigationLink(" ", destination: WebView(url: URL(string: "https://myau.american.edu")!))
                             )
-                            .position(x:100,y:100)
-                        Rectangle().foregroundColor(Color.brown)
-                            .frame(width:150,height:150).cornerRadius(15)
-                            .overlay(
-                                NavigationLink("International Student Services", destination: WebView(url: URL(string: "https://www.american.edu/ocl/isss")!))
-                            )
-                            .position(x:100,y:100)
-                            
                         
                         
-                        Rectangle().foregroundColor(Color.brown)
-                            .frame(width:150,height:150).cornerRadius(15)
+                            .position(x:100,y:100)
+                        
+//                        Text("AU Portal")
+//                            .font(.headline)
+//                            .position(x:100,y:20)
+//
+                        
+                        //                            .offset(rectangleOffset)
+                        //                                .gesture(
+                        //                                    DragGesture()
+                        //                                        .onChanged { value in
+                        //                                            // Update the offset of the Rectangle based on the drag gesture
+                        //                                            rectangleOffset = CGSize(width: value.translation.width, height: value.translation.height)
+                        //                                        }
+                        //                                        .onEnded { value in
+                        //                                                        // Calculate the new position based on the offset and the drag gesture's translation
+                        //
+                        //                                                        rectangleOffset = .zero
+                        //                                                    }
+                        //                                )
+                        
+                        Image("Eagle Service")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .cornerRadius(15)
                             .overlay(
-                                NavigationLink("AU Security", destination: WebView(url: URL(string: "https://www.american.edu/finance/memos/au-campus-safety-and-security-resources-notification-2022.cfm")!))
+                                NavigationLink(" ", destination: WebView(url: URL(string: "https://eagleservice.american.edu")!))
                             )
                             .position(x:100,y:100)
-                            
-                        Rectangle().foregroundColor(Color.brown)
-                            .frame(width:150,height:150).cornerRadius(15)
+                        
+                       
+                        Image("ISSS")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .cornerRadius(15)
                             .overlay(
-                                NavigationLink("Dining", destination: WebView(url: URL(string:"https://www.american.edu/ocl/onecarddining/")!))
+                                NavigationLink(" ", destination: WebView(url: URL(string: "https://www.american.edu/ocl/isss")!))
                             )
                             .position(x:100,y:100)
-                            
+                        
+                        Image("AU Security")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .cornerRadius(15)
+                            .overlay(
+                                NavigationLink(" ", destination: WebView(url: URL(string: "https://www.american.edu/finance/memos/au-campus-safety-and-security-resources-notification-2022.cfm")!))
+                            )
+                            .position(x:100,y:100)
+                        
+                        Image("Social")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .cornerRadius(15)
+                            .overlay(
+                                NavigationLink(" ", destination: WebView(url: URL(string: "https://www.american.edu/finance/memos/au-campus-safety-and-security-resources-notification-2022.cfm")!))
+                            )
+                            .position(x:100,y:100)
                         
                         
                         
-                            
-                        Rectangle().foregroundColor(Color.green)
-                            .frame(width:150,height:150).cornerRadius(15)
+                        Image("Dining")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .cornerRadius(15)
                             .overlay(
-                                NavigationLink("Canvas", destination: WebView(url: URL(string: "https://american.instructure.com")!))
-                            
+                                NavigationLink(" ", destination: WebView(url: URL(string:"https://www.american.edu/ocl/onecarddining/")!))
                             )
-                            .position(x:300,y:-690)
-                            
-                            
+                            .position(x:300,y:-70)
+              
+                        Image("Canvas")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .cornerRadius(15)
+                            .overlay(
+                                NavigationLink(" ", destination: WebView(url: URL(string: "https://american.instructure.com")!))
+                                
+                            )
+                            .position(x:300,y:-870)
+                        Image("SHP")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .cornerRadius(15)
+                            .overlay(
+                                NavigationLink(" ", destination: WebView(url: URL(string: "https://american.studenthealthportal.com")!))
+                            )
                         
-                        Rectangle()
-                            .foregroundColor(Color.purple)
-                            .frame(width:150,height:150).cornerRadius(15)
+                            .position(x:300,y:-860)
+
+                        Image("Library")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .cornerRadius(15)
                             .overlay(
-                                NavigationLink(" Student Health Portal", destination: WebView(url: URL(string: "https://american.studenthealthportal.com")!))
+                                NavigationLink(" ", destination: WebView(url: URL(string: "https://www.american.edu/library")!))
                             )
-                            
-                            .position(x:300,y:-690)
-                          
-                            
-                        Rectangle().foregroundColor(Color.orange)
-                            .frame(width:150,height:150).cornerRadius(15)
+                            .position(x:300,y:-860)
+      
+                        Image("Calendar")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .cornerRadius(15)
                             .overlay(
-                                NavigationLink("Library", destination: WebView(url: URL(string: "https://www.american.edu/library")!))
+                                NavigationLink(" ", destination: WebView(url: URL(string: "https://www.american.edu/provost/registrar/academic-calendar.cfm")!))
                             )
-                            .position(x:300,y:-690)
-                           
-                            
-                        Rectangle().foregroundColor(Color.orange)
-                            .frame(width:150,height:150).cornerRadius(15)
-                            .overlay(
-                                NavigationLink("AU Calendar", destination: WebView(url: URL(string: "https://www.american.edu/provost/registrar/academic-calendar.cfm")!))
-                            )
-                            .position(x:300,y:-690)
-                           
-                            
-                        
-                        Rectangle().foregroundColor(Color.orange)
-                            .frame(width:150,height:150).cornerRadius(15)
-                            .overlay(
-                                NavigationLink("Social Clubs ", destination: WebView(url: URL(string: "https://www.american.edu/ocl/student-involvement/student-clubs.cfm")!))
-                            )
-                            .position(x:300,y:-690)
-                            
-                            
+                            .position(x:300,y:-860)
+    
                     }
                     .navigationTitle("Dashboard")
                 }
             }
             
-        } else{
+    }else{
             ZStack {
                 Rectangle()
                     .frame(width :500, height:60)
