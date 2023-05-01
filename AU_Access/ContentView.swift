@@ -31,11 +31,6 @@ struct IdentifiableURL: Identifiable {
 struct ContentView: View {
     
     @StateObject var vm = ViewModel()
-    @State var isAUPortalTapped = false
-    @State private var rectangleOffset = CGSize.zero
-    @GestureState private var dragOffset = CGSize.zero
-    @State private var rectangleOffset1 = CGSize.zero
-    @GestureState private var dragOffset2 = CGSize.zero
     
     struct LinkItem: Identifiable {
         let id: UUID = UUID()
@@ -55,8 +50,7 @@ struct ContentView: View {
         LinkItem(imageName: "Library", destinationURL: "https://www.american.edu/library", text: "Library"),
         LinkItem(imageName: "Calendar", destinationURL: "https://www.american.edu/provost/registrar/academic-calendar.cfm", text: "AU Calendar"),
         LinkItem(imageName: "Social", destinationURL: "https://www.american.edu/ocl/student-involvement/student-clubs.cfm", text: "Social Clubs"),
-        LinkItem(imageName: "SHP", destinationURL: "https://american.studenthealthportal.com", text: "Health Portal"),
-        LinkItem(imageName: "HR", destinationURL: "https://american.studenthealthportal.com", text: "HR & Payroll")
+        LinkItem(imageName: "SHP", destinationURL: "https://american.studenthealthportal.com", text: "Health Portal")
     ]
     
     @State private var deletedLinks: [LinkItem] = []
@@ -73,7 +67,7 @@ struct ContentView: View {
                     .foregroundColor(.blue)
                     .overlay (
                         HStack {
-                            Text("Welcome wm2355a")
+                            Text("Welcome wm2355a!") //Change once you get access to APIs
                                 .foregroundColor(.white)
                             Spacer()
                             Button("Logout", action: vm.logout)
