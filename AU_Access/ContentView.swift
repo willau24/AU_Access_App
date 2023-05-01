@@ -73,7 +73,7 @@ struct ContentView: View {
                     .foregroundColor(.blue)
                     .overlay (
                         HStack {
-                            Text("Welcome \(vm.username)!")
+                            Text("Welcome wm2355a")
                                 .foregroundColor(.white)
                             Spacer()
                             Button("Logout", action: vm.logout)
@@ -91,6 +91,8 @@ struct ContentView: View {
                 .onChange(of: isCalendarSyncEnabled) { newValue in
                     if newValue {
                         addEventsToCalendar()
+                    } else {
+                        removeEventsFromCalendar()
                     }
                 }
                     
@@ -267,6 +269,33 @@ struct ContentView: View {
                 }
             }
         return events
+    }
+    
+    private func removeEventsFromCalendar() {
+        let eventStore = EKEventStore()
+        eventStore.requestAccess(to: .event) { granted, error in
+            if granted {
+                let calendarEvents = createCalenderEvents(eventStore: eventStore)
+                
+                for event in calendarEvents {
+                    let predicate = eventStore.predicateForEvents(withStart: event.startDate, end: event.endDate, calendars: nil)
+                    let events = eventStore.events(matching: predicate)
+                    
+                    for eventToRemove in events {
+                        if eventToRemove.title == event.title {
+                            do {
+                                try eventStore.remove(eventToRemove, span: .futureEvents)
+                                print("Event removed from calendar: \(event.title!) on \(event.startDate!) to \(event.endDate!)")
+                            } catch {
+                                print("Error removing event: \(error)")
+                            }
+                        }
+                    }
+                }
+            } else {
+                print("Access denied to calendar")
+            }
+        }
     }
 
     private func addEventsToCalendar() {
