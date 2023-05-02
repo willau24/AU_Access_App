@@ -9,7 +9,7 @@ import SwiftUI
 import WebKit
 import EventKit
 
-struct WebView: UIViewRepresentable {
+struct WebView: UIViewRepresentable { //Struct object for webviews in widgets
     let url: URL
     
     func makeUIView(context: Context) -> WKWebView {
@@ -32,7 +32,7 @@ struct ContentView: View {
     
     @StateObject var vm = ViewModel()
     
-    struct LinkItem: Identifiable {
+    struct LinkItem: Identifiable { //Struct object for formatting string link as URL object
         let id: UUID = UUID()
         let imageName: String
         let destinationURL: String
@@ -51,6 +51,7 @@ struct ContentView: View {
         LinkItem(imageName: "Calendar", destinationURL: "https://www.american.edu/provost/registrar/academic-calendar.cfm", text: "AU Calendar"),
         LinkItem(imageName: "Social", destinationURL: "https://www.american.edu/ocl/student-involvement/student-clubs.cfm", text: "Social Clubs"),
         LinkItem(imageName: "SHP", destinationURL: "https://american.studenthealthportal.com", text: "Health Portal")
+        //Could add more links here as desired. As proof of concept, there are 10 here
     ]
     
     @State private var deletedLinks: [LinkItem] = []
@@ -59,10 +60,10 @@ struct ContentView: View {
     @State private var selectedItem: LinkItem? = nil
     
     var body: some View {
-        if vm.authenticated {
+        if vm.authenticated { //Checks which view to present (login or dashboard)
             
             VStack(spacing: 0) {
-                Rectangle()
+                Rectangle() //Header to welcome username and present logout button
                     .frame(height: 60)
                     .foregroundColor(.blue)
                     .overlay (
@@ -92,14 +93,14 @@ struct ContentView: View {
                     
                 ScrollView {
                     VStack {
-                        ForEach(0..<5) { row in
+                        ForEach(0..<5) { row in //Creates 5x2 dashboard efficiently without need for positioning
                             HStack(spacing: 20) {
                                 ForEach(0..<2) { column in
                                     let index = row * 2 + column
-                                    if index < links.count {
+                                    if index < links.count { //Dynamic code for easy addition
                                         let link = links[index]
                                         
-                                        Button(action: {
+                                        Button(action: { //Establishes whole object as button
                                             selectedItem = link
                                             
                                             if let url = URL(string: link.destinationURL) {
@@ -119,14 +120,14 @@ struct ContentView: View {
                                                     .font(.headline)
                                             }
                                         }
-                                        .contextMenu {
+                                        .contextMenu { //On hold, present option for delete
                                             Button(action: {
                                                 if let index = links.firstIndex(where: {$0.id == link.id}) {
                                                     deleteLink(at: index)
                                                 }
                                             }) {
                                                 Text("Delete")
-                                                Image(systemName: "trash")
+                                                Image(systemName: "trash") //Common built-in icon
                                             }
                                         }
                                         .padding()
@@ -138,23 +139,23 @@ struct ContentView: View {
                         }
                     }
                     .padding()
-                    .sheet(item: $activeURL) { identifiableURL in
+                    .sheet(item: $activeURL) { identifiableURL in //Webview
                         WebView(url: identifiableURL.url)
                     }
-                    Button("Recover Deleted Links", action: recoverDeletedLinks)
+                    Button("Recover Deleted Links", action: recoverDeletedLinks) //Recover deleted links
                         .padding()
                 }
             }
         } else {
             ZStack {
-                Image("ppp")
+                Image("ppp") //Background image
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
                     .offset(x: -20, y: 0)
                 
                 VStack {
-                    Rectangle()
+                    Rectangle() //Header
                         .frame(height: 60)
                         .foregroundColor(.blue)
                         .overlay (
@@ -173,16 +174,16 @@ struct ContentView: View {
                     Spacer()
                     Spacer()
                     
-                    VStack(spacing: 20) {
+                    VStack(spacing: 20) { //Sign-in block
                         TextField("Username", text: $vm.username)
                             .textFieldStyle(.roundedBorder)
                             .textInputAutocapitalization(.none)
                         SecureField("Password", text: $vm.password)
                             .textFieldStyle(.roundedBorder)
                             .textInputAutocapitalization(.none)
-                            .privacySensitive()
+                            .privacySensitive() //Password protection
                         
-                        Button(action: vm.authenticate) {
+                        Button(action: vm.authenticate) { //User authentication, needs to be fully developed when you get access to APIs
                             Text("Sign-in with AU Credentials")
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 40)
@@ -191,7 +192,7 @@ struct ContentView: View {
                                 .cornerRadius(8)
                         }
                         
-                        Text("Reset an expired or forgotten password")
+                        Text("Reset an expired or forgotten password") //Convert to button with access to APIs
                             .foregroundColor(.red)
                     }
                     .padding()
@@ -202,7 +203,7 @@ struct ContentView: View {
                     Spacer()
                 }
             }
-            .alert(isPresented: $vm.invalid) {
+            .alert(isPresented: $vm.invalid) { //Invalid sign-in trigger
                 Alert(
                     title: Text("Access denied"),
                     message: nil,
@@ -213,17 +214,18 @@ struct ContentView: View {
         }
     }
     
-    func deleteLink(at index: Int) {
+    func deleteLink(at index: Int) { //Removes widget from dashboard
         let deletedLink = links.remove(at: index)
         deletedLinks.append(deletedLink)
     }
     
-    func recoverDeletedLinks() {
+    func recoverDeletedLinks() { //Recovers deleted widgets
         links.append(contentsOf: deletedLinks)
         deletedLinks.removeAll()
     }
     
     func createDate(day: Int, month: Int, year: Int, hour: Int = 0, minute: Int = 0) -> Date? {
+        //Creates date objects from int input
         let calendar = Calendar.current
         var dateComponents = DateComponents()
         dateComponents.year = year
@@ -237,6 +239,7 @@ struct ContentView: View {
     }
     
     func createCalenderEvents(eventStore: EKEventStore) -> [EKEvent] {
+        //Hard-coded May 2023 events. With access to APIs, you could generate content automatically with AU Calendar, even based on departments
         var events: [EKEvent] = []
         
         let eventDetails: [(title: String, startDate: (day: Int, month: Int, year: Int), endDate: (day: Int, month: Int, year: Int))] = [
@@ -266,6 +269,7 @@ struct ContentView: View {
     }
     
     private func removeEventsFromCalendar() {
+        //Removes events from calendar when slider is unselected
         let eventStore = EKEventStore()
         eventStore.requestAccess(to: .event) { granted, error in
             if granted {
@@ -293,7 +297,7 @@ struct ContentView: View {
     }
 
     private func addEventsToCalendar() {
-        
+        //Adds events to calendar when slider is selected
         let eventStore = EKEventStore()
         let calendarEvents = createCalenderEvents(eventStore: eventStore)
         
